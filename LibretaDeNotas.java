@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-import java.util.*;
-
 public class LibretaDeNotas {
     static Map<String, ArrayList<Double>> notas = new HashMap<>();
     static double notaAprobacion = 4.0; // Nota mínima definida para aprobar.
@@ -24,15 +22,28 @@ public class LibretaDeNotas {
         }
     }
 
-    //Nota máxima y mínima de un estudiante, en las instrucciones del ejercicio nunca se usa.
     public static void mostrarMaxMin() {
-
         for (String nombre : notas.keySet()) {
             ArrayList<Double> listaNotas = notas.get(nombre);
-            double max = Collections.max(listaNotas);
-            double min = Collections.min(listaNotas);
-            System.out.println(nombre + " Máxima: " + max +
-                    "\nMínima: " + min);
+
+            double max = listaNotas.get(0);
+            double min = listaNotas.get(0);
+
+            for (double nota : listaNotas) {
+                if (nota > max) {
+                    max = nota;
+                }
+                if (nota < min) {
+                    min = nota;
+                }
+            }
+
+            double promedio = calcularPromedio(listaNotas);
+
+            System.out.println("\nEstudiante: " + nombre +
+                    "\nPromedio de Notas: " + promedio +
+                    "\nNota Máxima: " + max +
+                    "\nNota Mínima: " + min);
         }
     }
 
@@ -137,6 +148,8 @@ public class LibretaDeNotas {
 
             agregarNota(nombreAlumno, notasAlumno);
         }
+
+        mostrarMaxMin();
 
         int opcion;
         do {
